@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>devflow_guide · Software engineering workflow skill, usage and practice</title>
+<style>
+
+:root{--ink:#182d3c;--muted:#587080;--nav:#10263b;--nav2:#16314b;--bg:#f5f7f9;--paper:#fff;--line:#dbe4ea;--blue:#2169ae;--cyan:#187e94;--amber:#96600f;--red:#a63a3b;--green:#217a60;--shadow:0 8px 28px rgba(16,42,65,.06)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.83 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}button,select,input{font:inherit}button{cursor:pointer}p{margin:0 0 14px}h1,h2,h3,h4{line-height:1.4;letter-spacing:-.015em}h1{font-size:2.35rem;margin:0 0 18px}h2{font-size:1.58rem;margin:0 0 21px}h3{font-size:1.14rem;margin:26px 0 11px}h4{font-size:1rem;margin:20px 0 10px}small{font-size:13px}.sidebar{position:fixed;inset:0 auto 0 0;width:272px;background:linear-gradient(175deg,#112b43,#102338);color:#cedde8;padding:24px 14px;overflow:auto;z-index:4}.brand{display:flex;align-items:center;gap:12px;padding:8px 12px 19px;border-bottom:1px solid #2a4660;margin-bottom:16px}.logo{font-weight:800;color:#fff;font-size:18px;display:grid;place-items:center;width:39px;height:39px;border:1px solid #467b9e;border-radius:11px;background:#204b69}.brand b{color:#fff;font-size:16px}.brand small{display:block;font-size:11px;color:#9fb7ca}.side-label{font-size:11px;letter-spacing:.17em;color:#7fa4bb;text-transform:uppercase;margin:18px 14px 8px}.sidebar nav a{display:block;padding:8px 12px;border-radius:8px;margin:1px 4px;color:#bdcfde;font-size:13.5px;line-height:1.4}.sidebar nav a:hover,.sidebar nav a.active{background:#234561;color:#fff;text-decoration:none}.side-foot{border-top:1px solid #2b4359;padding:16px 12px;color:#9fb7c9;font-size:12px;line-height:1.8;margin-top:15px}.main{margin-left:272px;min-width:0}.topbar{height:58px;display:flex;align-items:center;justify-content:space-between;gap:15px;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);padding:0 36px;position:sticky;top:0;z-index:3;backdrop-filter:blur(9px)}.crumb{font-size:13px;color:#587284}.topright{display:flex;align-items:center;gap:9px;font-size:12px;color:#758d9c}.pill{display:inline-block;padding:2px 9px;border-radius:99px;border:1px solid #bedadf;background:#ecf7f7;color:#1c687b;font-size:11px;font-weight:700}.menu{display:none;border:1px solid #ccdce4;background:#fff;border-radius:8px;padding:4px 11px}.content{width:min(1050px,calc(100% - 72px));margin:auto;padding:33px 0 110px}.hero{border-radius:18px;padding:38px 44px;color:#fff;background:radial-gradient(circle at 90% 12%,rgba(71,176,204,.30),transparent 28%),linear-gradient(116deg,#122f48,#1c4c6b);box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;border:1px solid rgba(140,213,228,.21);width:260px;height:260px;border-radius:50%;right:-80px;bottom:-135px;box-shadow:0 0 0 35px rgba(140,213,228,.05),0 0 0 70px rgba(140,213,228,.04)}.eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:800;color:#a7e0e7;margin-bottom:16px}.hero h1{max-width:700px}.hero p{max-width:780px;color:#d6e5f0;font-size:15px}.hero .meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:19px}.hero .meta span{font-size:12px;border:1px solid #61889d;color:#e3f5f7;border-radius:7px;padding:4px 9px}.section{background:var(--paper);border:1px solid #e0e9ed;border-radius:16px;padding:34px 39px;margin-top:24px;box-shadow:var(--shadow);scroll-margin-top:80px}.number{font:800 12px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--cyan);letter-spacing:.13em;margin-bottom:10px}.lede{color:#526b7b;font-size:15px;margin-top:-8px;margin-bottom:24px}.panel{padding:18px 20px;border-radius:12px;border:1px solid var(--line);background:#f9fbfc;margin:17px 0}.panel b,.panel strong{color:#23445b}.note{border-left:4px solid var(--cyan);padding:10px 14px;margin:16px 0;background:#f0f8fa;color:#345368}.warning{border-left:4px solid #d09a47;padding:11px 15px;background:#fff8ed;color:#6f4b1d;margin:17px 0}.danger{border-left:4px solid var(--red);background:#fff2f0;color:#7d3436;padding:11px 15px;margin:17px 0}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{border:1px solid var(--line);border-radius:11px;padding:15px 16px;background:#fff}.metric b{display:block;color:#173d55;margin-bottom:5px}.metric span{font-size:13px;color:#5d7382;line-height:1.65;display:block}.tbl{overflow-x:auto;margin:17px 0;border:1px solid var(--line);border-radius:10px}.tbl table{border-collapse:collapse;width:100%;min-width:630px;font-size:13.5px}.tbl td,.tbl th{padding:11px 13px;border-bottom:1px solid #e3e9ed;vertical-align:top;text-align:left;line-height:1.6}.tbl tr:last-child td{border:0}.tbl th{background:#f1f6f8;color:#315367;font-weight:750}.tbl td:first-child{font-weight:650;color:#2b556c}.codebox{margin:14px 0 21px;border-radius:12px;background:#142839;color:#e7f1f8;overflow:hidden}.codecap{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #345064;font-size:12px;color:#a7c4d8}.copy{border:1px solid #5b7a8c;background:#19384e;color:#d5eafa;border-radius:6px;padding:4px 10px;font-size:12px}.copy:hover{background:#285371}.codebox pre{margin:0;padding:16px 19px;white-space:pre;overflow-x:auto;font:12.5px/1.8 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;tab-size:2}.inlinecode,code:not(pre code){font: .9em ui-monospace,SFMono-Regular,Consolas,monospace;background:#edf3f6;border:1px solid #dce7ec;padding:1px 5px;border-radius:5px;color:#145071}.step-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:21px 0}.step{border:1px solid #cddfe7;background:#f7fbfc;border-radius:9px;padding:10px 6px;text-align:center;font-size:12px;font-weight:700;min-height:72px;color:#436477;position:relative;transition:background .23s,border .23s,transform .23s}.step span{display:block;font:800 10px ui-monospace,monospace;margin-bottom:2px;color:#7794a3}.step.on{background:#dff5f7;border-color:#67b7bb;transform:translateY(-3px);color:#155a70;box-shadow:0 5px 10px rgba(14,111,128,.1)}.step:hover{border-color:#4995a4}.stage-detail{background:#102e44;color:#e1f0f9;padding:18px 21px;border-radius:11px;min-height:122px}.stage-detail h3{color:#fff;margin:0 0 6px}.stage-detail p{font-size:13px;margin:0;color:#c5dbe8}.stage-detail .stage-index{font:700 11px monospace;letter-spacing:.1em;color:#7fd4dd}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}.btn{border:1px solid #c0d5df;background:#fff;color:#1c536e;border-radius:8px;padding:7px 13px;font-size:13px;font-weight:750}.btn:hover{background:#eef7fa}.btn.primary{background:#186580;border-color:#186580;color:#fff}.btn.primary:hover{background:#0f506b}select{border:1px solid #c9dae4;background:white;border-radius:8px;padding:8px 11px;color:#2c5267;max-width:100%}.control-card{border:1px solid #d7e5ec;border-radius:12px;padding:19px;margin:16px 0;background:#f6fafb}.control-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}.control-row label{font-weight:700;color:#315467;display:flex;flex-direction:column;gap:5px;font-size:13px}.output{background:#eaf4f6;border:1px solid #c6dee2;padding:16px;border-radius:10px;min-height:65px;margin-top:13px;font-size:13px;line-height:1.75}.output b{color:#1b5f73}.profile-card{margin-top:15px;padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #cfdee6;min-height:170px}.profile-card h3{margin:0 0 8px}.profile-card p{font-size:14px}.profile-card ul{margin:6px 0;padding-left:22px;font-size:13px}.doc-filter{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.doc-filter button.active{background:#216684;color:#fff;border-color:#216684}.gate-check{display:flex;gap:12px;padding:12px 13px;border:1px solid #e0e8ed;border-radius:9px;margin-bottom:9px;font-size:13px;align-items:flex-start;cursor:pointer;background:#fff}.gate-check input{margin-top:5px;accent-color:#176987}.gate-check small{display:block;color:#687f8c;margin-top:2px}.gate-banner{display:flex;gap:13px;align-items:center;flex-wrap:wrap;padding:12px 16px;border-radius:9px;background:#fdf2ed;border:1px solid #efd0c2;color:#803e31;font-weight:750;font-size:14px}.gate-banner.ok{background:#eaf6f2;border-color:#bee0d5;color:#206c53}.glossary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.term{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:#fff;font-size:13px}.term b{color:#215672}.term p{margin:4px 0 0;color:#597383;font-size:12px;line-height:1.65}.term.hide{display:none}#termSearch{width:100%;padding:10px 13px;border:1px solid #cddfe7;border-radius:9px;margin-bottom:13px}.rule{border-top:1px dashed #d8e4e9;margin:24px 0}.footer{text-align:center;color:#8195a2;font-size:12px;margin:31px auto 0}.faq details{border-bottom:1px solid #e1e9ec;padding:11px 0}.faq summary{font-weight:700;cursor:pointer;color:#315970}.faq details p{margin:9px 0 5px;color:#597383;font-size:14px}.hint{font-size:12px;color:#658292}.label{display:inline-block;color:#1b6175;background:#e6f3f6;border-radius:5px;padding:0 6px;font-size:11px;font-weight:700}.flow-anim{height:6px;background:#dae9ed;border-radius:9px;margin:2px 0 18px;overflow:hidden}.flow-anim i{display:block;height:100%;width:13%;background:linear-gradient(90deg,#5ad0d0,#19809b);border-radius:9px;transition:width .28s}.ref-links{font-size:12px;line-height:2}.ref-links a{word-break:break-word}.kbd{border:1px solid #bacad3;background:#f6f9fa;border-radius:4px;box-shadow:0 1px 0 #c4d4dc;padding:2px 6px;font:12px monospace}.tiny{font-size:12px;color:#64808f}.callout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.diagram{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-items:center;gap:4px;text-align:center;margin:14px 0 18px}.diagram div{padding:12px 6px;border:1px solid #bbd8e0;border-radius:8px;background:#eaf5f7;font-size:12px;color:#225e73;font-weight:700}.diagram span{color:#3a8396}
+@media(max-width:1080px){.sidebar{width:230px}.main{margin-left:230px}.content{width:min(950px,calc(100% - 44px))}.section{padding:28px}.topbar{padding:0 22px}.hero{padding:32px}}
+@media(max-width:760px){.sidebar{width:min(310px,86vw);transform:translateX(-105%);transition:transform .2s;box-shadow:8px 0 22px rgba(0,0,0,.14)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.menu{display:block}.topbar{padding:0 15px;height:53px}.content{width:calc(100% - 22px);padding-top:12px}.hero{border-radius:13px;padding:24px 19px}.hero h1{font-size:1.77rem}.section{border-radius:12px;padding:23px 16px;margin-top:12px}.section h2{font-size:1.36rem}.grid2,.grid3,.glossary-grid,.callout-grid{grid-template-columns:1fr}.step-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.diagram{grid-template-columns:1fr;max-width:450px}.diagram span{transform:rotate(90deg)}.topright{font-size:10px}.control-row{align-items:stretch}.codebox pre{font-size:11.5px}.section{scroll-margin-top:65px}}
+@media print{body{background:#fff}.sidebar,.topbar,.actions,.control-row,.doc-filter,.gate-check,.menu{display:none!important}.main{margin:0}.content{width:100%;padding:0}.hero{background:#eff6f8;color:#12344a;border:1px solid #cddfe3;box-shadow:none}.hero p,.eyebrow{color:#365267}.hero .meta span{color:#365267;border-color:#bcced7}.section{break-inside:avoid;box-shadow:none;margin:10px 0;border-radius:0;padding:18px}.codebox{-webkit-print-color-adjust:exact;print-color-adjust:exact}html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+
+@media(max-width:760px){
+.topbar{height:auto;min-height:53px;flex-wrap:wrap;row-gap:6px;padding:8px 12px}
+.topbar>div:first-child{min-width:0;flex:1 1 160px}
+.crumb{min-width:0;overflow-wrap:anywhere}
+.topright{flex:1 1 140px;flex-wrap:wrap;justify-content:flex-end;row-gap:4px}
+.hero h1,.hero p{max-width:100%;overflow-wrap:break-word}
+}
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar" aria-label="Manual contents">
+<div class="brand"><div class="logo">D</div><div><b>devflow_guide</b><small>Governance · offline manual</small></div></div>
+<div class="side-label">Contents</div>
+<nav id="nav">
+<a href="#intro">00 · Scope and how to read</a>
+<a href="#install">01 · Install and use the skill</a>
+<a href="#route">02 · Project type and rigor</a>
+<a href="#lifecycle">03 · Requirement-to-release loop</a>
+<a href="#docflow">04 · Docs, code, and tests</a>
+<a href="#directories">05 · Directories and authority</a>
+<a href="#domains">06 · Domain-specific gates</a>
+<a href="#operation">07 · Four working workflows</a>
+<a href="#cli">08 · Commands and how to read them</a>
+<a href="#gate">09 · Interactive gate lab</a>
+<a href="#scenarios">10 · Cases and task contract</a>
+<a href="#faq">11 · Risks, limits, and FAQ</a>
+<a href="#glossary">12 · Glossary</a>
+</nav>
+<div class="side-foot">Version 1.0.0<br>Single-file offline HTML. No third-party JavaScript.<br>This manual explains the practice. It is not a certification tool.</div>
+</aside>
+<div class="main">
+<header class="topbar">
+<div style="display:flex;align-items:center;gap:12px">
+<button class="menu" id="menuBtn" aria-label="Open contents">&#9776;</button>
+<div class="crumb">Engineering library / Development governance / devflow_guide</div>
+</div>
+<div class="topright">
+<a class="pill" href="../zh/devflow_guide.html">&#20013;&#25991;</a>
+<span class="pill">Offline</span>
+<span>Self-study · practice</span>
+</div>
+</header>
+<main class="content">
+<div class="hero" id="intro">
+<div class="eyebrow">Developer Workflow Governance · Practical Guide</div>
+<h1>Turn software work from "it compiles" into delivery that is designed, verified, and traceable</h1>
+<p>This is the usage and engineering-practice manual for the devflow_guide skill, not a classroom slide deck. It follows the order of a real software project: what to do, why, what artifact to produce, how to judge completion, and which decisions an AI coding agent can assist but cannot replace.</p>
+<div class="meta">
+<span>Embedded / DSP / ISP</span><span>Web / API</span><span>Qt / desktop / mobile</span><span>Adopt an existing repo</span><span>Python standard-library tool</span>
+</div>
+</div>
+
+<section class="section" aria-labelledby="intro-title">
+<div class="number">00 · GUIDE MAP</div>
+<h2 id="intro-title">What this skill actually solves</h2>
+<p>A repository that contains only source code tends to drift: unclear requirements, interfaces that keep changing, tests that cannot be reproduced, documents that no longer match the code, and a merged PR that gets mistaken for a release. devflow_guide splits that problem into eight objects — <strong>requirements, architecture, interfaces, tasks, code, verification, review, and release</strong> — and keeps one consistent relationship among them.</p>
+<div class="callout-grid">
+<div class="metric"><b>Design has a boundary</b><span>Confirm the requirement, environment, constraints, and risk before designing just enough architecture. Do not over-design in the name of process.</span></div>
+<div class="metric"><b>Implementation has evidence</b><span>Each change traces to a requirement and a test. A successful build is not board verification, and a merged PR is not a release.</span></div>
+<div class="metric"><b>Existing projects stay intact</b><span>Inspect current files first and identify the real authority. Initialization only adds missing governance files. It does not overwrite originals.</span></div>
+</div>
+<div class="note"><strong>Suggested reading order:</strong> first use, read 01, then 04, 07, and 08. Before an architecture change, read 03 and 05. Before a PR or release, read 08 and 09. Terms are at the end; jump from the contents at any time.</div>
+</section>
+
+<section class="section" id="install">
+<div class="number">01 · INSTALLATION</div>
+<h2>Install the skill so the agent can see the rules</h2>
+<p>An Agent Skill is a directory made of <code>SKILL.md</code> plus optional <code>references/</code>, <code>scripts/</code>, and <code>assets/</code>. This package uses the spec-compatible directory name <code>devflow-guide</code> (hyphen). The display name remains <b>devflow_guide</b>. The <code>name</code> field cannot contain underscores and must match the folder name.</p>
+<h3>1. Package layout</h3>
+<div class="codebox"><div class="codecap">Repository layout <button class="copy" data-copy>Copy</button></div>
+<pre>devflow_guide/
+├── README.md
+├── devflow-guide/                    ← skill root
+│   ├── SKILL.md                      ← triggers and workflow
+│   ├── references/                   ← profiles, stages, review, examples
+│   ├── assets/templates/             ← document templates
+│   ├── scripts/devflow.py            ← inspect / init / audit / gate
+│   └── scripts/test_devflow.py       ← offline self-test
+├── manual/
+│   ├── zh/devflow_guide.html         ← Chinese manual
+│   └── en/devflow_guide.html         ← English manual
+└── examples/                         ← sample task, ADR, PR, trace rows</pre>
+</div>
+<h3>2. Recommended Codex project install</h3>
+<p>Copy the whole <code>devflow-guide</code> folder into <code>.agents/skills/</code> at the project root. Do not copy only <code>SKILL.md</code>, or the templates and scripts will be missing. To share it across projects, copy it to <code>~/.agents/skills/</code>.</p>
+<div class="codebox"><div class="codecap">Path after installation</div>
+<pre>your-project/
+└── .agents/
+    └── skills/
+        └── devflow-guide/
+            ├── SKILL.md
+            ├── references/
+            ├── assets/
+            └── scripts/</pre>
+</div>
+<div class="warning"><strong>Note:</strong> installation only lets a compatible coding agent discover the rules. It does not modify the repository by itself. Skill locations differ by agent. For Codex, the repository path is <code>.agents/skills/devflow-guide/</code>.</div>
+<h3>3. First task to give Codex</h3>
+<div class="codebox"><div class="codecap">Copy this to the coding agent <button class="copy" data-copy>Copy</button></div>
+<pre>Use $devflow-guide.
+First inspect this repository read-only. Do not modify code or documents.
+Classify it as embedded, web, app, or hybrid.
+Recommend lite, standard, or high from the consequence of failure.
+List authoritative documents, code layout, build and test entry points, gaps, and risks.
+Propose an adoption plan: files to add, and existing files that must not be touched.
+Until I explicitly approve, only inspect and init --dry-run are allowed.</pre>
+</div>
+</section>
+
+<section class="section" id="route">
+<div class="number">02 · PROJECT PROFILING</div>
+<h2>Identify the project type, then set the level of control</h2>
+<p><b>Profile</b> routes the workflow by runtime and deliverable. <b>Assurance</b> decides how much design and verification evidence to keep, based on failure consequence, external constraints, and recovery cost. They are different axes. Do not infer either from a file extension or from the size of the codebase.</p>
+<div class="control-card">
+<div class="control-row">
+<label>Project<select id="profileSelect">
+<option value="embedded">Embedded · firmware / DSP / driver / ISP</option>
+<option value="web">Web · frontend / service / API</option>
+<option value="app">Application · Qt / desktop / mobile</option>
+</select></label>
+<label>Assurance<select id="assuranceSelect">
+<option value="lite">lite · lightweight prototype</option>
+<option value="standard" selected>standard · normal engineering</option>
+<option value="high">high · constrained / high-consequence</option>
+</select></label>
+</div>
+<div class="output" id="profileOutput" aria-live="polite"></div>
+</div>
+<div class="tbl"><table>
+<thead><tr><th>Level</th><th>Fits when</th><th>Reasonable tailoring</th><th>Do not drop</th></tr></thead>
+<tbody>
+<tr><td>lite</td><td>Personal tools, proofs of concept, low-risk experiments</td><td>Keep detailed design in the issue; use fewer standalone templates</td><td>Testable requirements, a bounded change, and no invented results</td></tr>
+<tr><td>standard</td><td>Several maintainers, real users, ongoing delivery</td><td>Write an ADR only for important decisions; layer tests by risk</td><td>PR and CI, interface compatibility, docs and tests moving together</td></tr>
+<tr><td>high</td><td>Costly failure, irreversible data, safety, or contractual traceability</td><td>Unrelated documents may be omitted; required evidence may not</td><td>Two-way traceability, a controlled baseline, independent review, and explicit approval</td></tr>
+</tbody></table></div>
+<p><strong>Mixed systems:</strong> a product that has an RK3588 device, a web service, and a Qt host should define the system contract first, then apply a profile to each subproject. A web end-to-end result does not stand in for device HIL.</p>
+</section>
+<section class="section" id="lifecycle">
+<div class="number">03 · LIFECYCLE</div>
+<h2>The development loop: every stage needs a checkable exit</h2>
+<p>This is not a one-pass waterfall. Repeat the small loop for each independently verifiable change. Select a node to see its purpose, artifact, and common mistake. Auto-play is only a way to see the flow.</p>
+<div class="step-cards" id="stepCards" aria-label="Ten-stage development flow"></div>
+<div class="flow-anim"><i id="flowBar"></i></div>
+<div class="stage-detail" id="stageDetail" aria-live="polite"></div>
+<div class="actions">
+<button class="btn primary" id="playSteps">&#9654; Auto-play</button>
+<button class="btn" id="resetSteps">Back to requirements</button>
+<span class="hint">Check whether a stage is actually finished, not merely whether a document exists.</span>
+</div>
+<div class="tbl"><table>
+<thead><tr><th>Stage</th><th>Typical work</th><th>Evidence you can deliver</th></tr></thead>
+<tbody>
+<tr><td>Requirements</td><td>Goal, success conditions, boundaries, and failure paths</td><td>REQ and acceptance criteria</td></tr>
+<tr><td>Risk check</td><td>Probe the largest unknown: board throughput, concurrency, migration, security</td><td>PoC or measurement, and a risk disposition</td></tr>
+<tr><td>Architecture</td><td>Module responsibilities, interface direction, runtime data flow, important tradeoffs</td><td>Architecture description and only the ADRs that are needed</td></tr>
+<tr><td>Interfaces</td><td>Data structures, timing, error codes, compatibility, and resource ownership</td><td>Contract, state machine, or sequence description</td></tr>
+<tr><td>Tasks</td><td>Independent slices, dependencies, acceptance, scope, and tests</td><td>TASK or issue</td></tr>
+<tr><td>Implementation</td><td>Only the agreed scope, with the tests and documents that must change with it</td><td>Code, unit tests, and document diffs</td></tr>
+<tr><td>Review</td><td>Pull request, code review, build, and static checks</td><td>Real CI and review records</td></tr>
+<tr><td>System verification</td><td>Performance, compatibility, faults, and stability in the real environment</td><td>System, HIL, or end-to-end evidence</td></tr>
+<tr><td>Release</td><td>Freeze the candidate, record the artifact hash, compatibility, recovery, and approval</td><td>Release record and artifact manifest</td></tr>
+<tr><td>Maintenance</td><td>Watch issues, review what happened, and feed the next requirement</td><td>Issues, logs, and regression records</td></tr>
+</tbody></table></div>
+<div class="note">An accepted ADR is not implemented code. A merged PR is not a product release. A passing unit test is not acceptance on real hardware or in production.</div>
+</section>
+
+<section class="section" id="docflow">
+<div class="number">04 · DOCUMENTS AS CODE</div>
+<h2>Why documents, code, and tests change together</h2>
+<p>Docs as Code means requirements, architecture, and interface documents are versioned like source, reviewed with the change, and given a basic consistency check by script. The point is not more documents. It is that <strong>one requirement, one authoritative contract, one set of tests, and the change record can find each other</strong>.</p>
+<div class="diagram"><div>REQ</div><span>&rarr;</span><div>ADR / design</div><span>&rarr;</span><div>TASK / PR</div><span>&rarr;</span><div>TEST / evidence</div></div>
+<h3>1. Write a requirement that can be tested</h3>
+<div class="grid2">
+<div class="panel"><b>Too vague</b><p>"The ISP simulator must be fast, parameter changes must be real time, and results must be stable."</p><small>No machine, input size, timing method, threshold, or fault definition.</small></div>
+<div class="panel"><b>A usable demonstration</b><p>"REQ-ISP-001: on the named test machine and RAW input specification, the 99th-percentile preview update after a Gamma change stays within the reviewed threshold, measured by one benchmark script and archived with the raw samples."</p><small>The number, device, and load must come from measurement or a business target. This manual does not invent a metric.</small></div>
+</div>
+<h3>2. How one trace row crosses the artifacts</h3>
+<div class="codebox"><div class="codecap">TRACEABILITY.csv · a sample, not proof of a pass <button class="copy" data-copy>Copy</button></div>
+<pre>requirement_id,design_ref,test_id,evidence_ref,status
+REQ-ISP-001,docs/devflow/architecture/ARCHITECTURE.md,TEST-ISP-001,,planned</pre>
+</div>
+<p><code>REQ-ISP-001</code> identifies the requirement. <code>design_ref</code> points at the single design file. <code>TEST-ISP-001</code> identifies the test. An empty <code>evidence_ref</code> means there is no verification evidence yet. <code>planned</code> means the test is planned. <b>Do not change planned to verified just to make a review look green.</b></p>
+<h3>3. Which code changes must revisit documents</h3>
+<div class="tbl"><table>
+<thead><tr><th>Code change</th><th>At least review</th><th>Typical regression</th></tr></thead>
+<tbody>
+<tr><td>Interface or API</td><td>Contract, callers, requirements, and an ADR if the decision is significant</td><td>Contract tests and compatibility negatives</td></tr>
+<tr><td>Driver buffer or DMA</td><td>Memory protocol, timing, and the hardware matrix</td><td>Data integrity, repeated start/stop, and on-target HIL</td></tr>
+<tr><td>Database table</td><td>Data model, migration plan, and rollback</td><td>Migration, restore, and compatibility</td></tr>
+<tr><td>Qt async rendering</td><td>Threads and state machine, resource lifetime, and error recovery</td><td>Close/reopen, stress, and OS compatibility</td></tr>
+<tr><td>Copy or an internal log</td><td>Judge the real impact; do not force an architecture edit</td><td>A small related check</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="section" id="directories">
+<div class="number">05 · STRUCTURE CONTROL</div>
+<h2>Add governance without breaking a mature repository</h2>
+<p>A disciplined layout does not mean moving all code into one naming scheme. Keep the build scripts, module structure, and authoritative documents that already work. By default the skill puts new governance documents under <code>docs/devflow/</code> and records the authoritative document map in <code>.devflow.json</code>.</p>
+<div class="codebox"><div class="codecap">Files typically added (standard / embedded)</div>
+<pre>repo/
+├── .devflow.json                         ← project constraints
+├── docs/devflow/
+│   ├── INDEX.md                          ← governance entry
+│   ├── requirements/REQUIREMENTS.md      ← verifiable requirements
+│   ├── architecture/ARCHITECTURE.md      ← components, data flow, budgets
+│   ├── interfaces/CONTRACTS.md           ← pointer to the one contract
+│   ├── testing/TEST_PLAN.md              ← strategy and environments
+│   ├── testing/TRACEABILITY.csv          ← REQ to design to TEST to evidence
+│   ├── reviews/REVIEW_LOG.md             ← review notes and open actions
+│   ├── release/RELEASE_PLAN.md           ← version and rollback
+│   └── embedded/                         ← boards, DMA, HIL, firmware
+├── [existing code and build tree]        ← init does not touch this
+└── [existing CI / .git]                  ← init does not touch this</pre>
+</div>
+<p>If the repository already has <code>docs/ARCHITECTURE.md</code>, <code>init --adopt</code> tries to map that file instead of creating a second, conflicting architecture document. If a historical path is not recognized, edit the path in <code>.devflow.json</code> and keep a single authority.</p>
+<h3>Documents by assurance and profile</h3>
+<div class="doc-filter">
+<button class="btn active" data-doc-profile="embedded">Embedded standard</button>
+<button class="btn" data-doc-profile="web">Web standard</button>
+<button class="btn" data-doc-profile="app">Application standard</button>
+<button class="btn" data-doc-profile="high">Shared high-assurance</button>
+</div>
+<div class="output" id="docOutput" aria-live="polite"></div>
+<div class="danger"><strong>Never do these automatically:</strong> overwrite an existing requirements or architecture document, move source trees, edit build configuration, rewrite Git history, change remote branch protection, or publish firmware or a live service. Those need a separate explicit authorization and their own verification.</div>
+</section>
+<section class="section" id="domains">
+<div class="number">06 · DOMAIN-SPECIFIC CONTROLS</div>
+<h2>Embedded, web, and applications: one skeleton, different risks</h2>
+<div class="grid3">
+<div class="metric"><b>Embedded</b><span>Hardware revision, clock, power, and reset, driver lifetime, DMA and cache, real-time behavior, on-target tests, flashing, and upgrade recovery.</span></div>
+<div class="metric"><b>Web</b><span>API contract, authentication and authorization, data migration, concurrency and trust boundaries, end-to-end tests, observability, and service recovery.</span></div>
+<div class="metric"><b>Desktop and mobile</b><span>UI state, threads and lifecycle, OS and device compatibility, install, update, and uninstall, data protection, and crash recovery.</span></div>
+</div>
+<h3>Where the controls differ</h3>
+<div class="tbl"><table>
+<thead><tr><th>Question</th><th>Embedded</th><th>Web</th><th>Application</th></tr></thead>
+<tbody>
+<tr><td>Real environment</td><td>Target board, PCB revision, BSP, firmware</td><td>Browser, API, database, cloud, and network</td><td>OS, GPU or driver, device permissions</td></tr>
+<tr><td>Key design records</td><td>Schematic, interface timing, memory ownership</td><td>API schema, trust boundary, data model</td><td>UI state, event loop, data and plugin model</td></tr>
+<tr><td>Main risks</td><td>Cache errors, bad frames, timing, power loss</td><td>Broken access control, failed migration, capacity, privacy</td><td>Jank, incompatibility, data lost on upgrade</td></tr>
+<tr><td>Core verification</td><td>Host + target + HIL + soak and fault tests</td><td>Contract + integration + E2E + load and security</td><td>Unit + UI + OS matrix + install and upgrade</td></tr>
+<tr><td>Release assets</td><td>Image, DTB, BSP, board matrix, and hashes</td><td>Image, DB migration, rollout, monitoring, and restore</td><td>Installer, signature, support matrix, and rollback</td></tr>
+</tbody></table></div>
+<div class="note">Example: every algorithm-thread unit test passing on RK3588 does not prove that the sensor, PCIe, DMA, cache, and end-to-end timing are healthy. An API unit test does not prove that deployed authorization, the database migration, or the login flow is correct.</div>
+</section>
+
+<section class="section" id="operation">
+<div class="number">07 · OPERATION RECIPES</div>
+<h2>Four workflows you will actually use</h2>
+<h3>A. New project: design and layout before code</h3>
+<div class="codebox"><div class="codecap">Run from the repository; replace the path <button class="copy" data-copy>Copy</button></div>
+<pre>python devflow-guide/scripts/devflow.py inspect --root ./my-project
+python devflow-guide/scripts/devflow.py init --root ./my-project \
+  --profile embedded --assurance standard --dry-run
+# After reviewing the planned files and approving them:
+python devflow-guide/scripts/devflow.py init --root ./my-project \
+  --profile embedded --assurance standard
+python devflow-guide/scripts/devflow.py audit --root ./my-project</pre>
+</div>
+<p>Fill requirements, architecture, interfaces, and the test strategy first. A TODO warning means the template is still unfinished. A person then decides which proofs of concept or board tests are required before design or coding continues.</p>
+<h3>B. Existing project: adopt it, do not regenerate it</h3>
+<div class="codebox"><div class="codecap">An existing repository must pass --adopt <button class="copy" data-copy>Copy</button></div>
+<pre>python devflow-guide/scripts/devflow.py inspect --root ./existing-repo
+python devflow-guide/scripts/devflow.py init --root ./existing-repo \
+  --profile web --assurance high --adopt --dry-run
+# Check that existing specifications were mapped. After approval, drop --dry-run:
+python devflow-guide/scripts/devflow.py init --root ./existing-repo \
+  --profile web --assurance high --adopt</pre>
+</div>
+<p>If a <code>README.md</code>, SRS, API schema, or architecture document is already authoritative, do not copy its content into a second conflicting version. Check the <code>.devflow.json</code> map first.</p>
+<h3>C. One feature: requirement, small task, proof in the same PR</h3>
+<p>Write the REQ and acceptance criteria. If the change is a cross-module interface or architecture decision, add or update an ADR and the contract. Then open a TASK that names the source files, tests, and documents in scope. After implementation, run the real build and tests, report what was not run, and open a PR for a person to review.</p>
+<div class="codebox"><div class="codecap">Review draft <button class="copy" data-copy>Copy</button></div>
+<pre>Use $devflow-guide to implement TASK-ISP-007:
+1. Check the current main SHA, the linked REQ, and the ADR status first.
+2. Touch only the scope named by the TASK. Interface changes update the contract and tests.
+3. Run the build, unit tests, and integration tests the project can actually execute.
+4. Report PASS, FAIL, or UNKNOWN with the command, environment, and real log or URL.
+5. Do not merge the PR, and do not treat a Proposed ADR as Accepted.
+6. Submit a review note: files changed, risks, missing evidence, and the next step.</pre>
+</div>
+<h3>D. Release candidate: local preflight plus the real external gate</h3>
+<div class="codebox"><div class="codecap">Read-only checks <button class="copy" data-copy>Copy</button></div>
+<pre>python devflow-guide/scripts/devflow.py audit --root ./my-project --strict
+python devflow-guide/scripts/devflow.py gate --root ./my-project --stage design
+python devflow-guide/scripts/devflow.py gate --root ./my-project --stage merge
+python devflow-guide/scripts/devflow.py gate --root ./my-project --stage release</pre>
+</div>
+<p><b>The difference that matters:</b> the script can check local files, trace rows, and Git state. It cannot certify remote CI, reviews, hardware trials, or approvals. <code>READY_FOR_HUMAN_REVIEW</code> still requires confirmation in the real pull request, CI, and release system.</p>
+</section>
+
+<section class="section" id="cli">
+<div class="number">08 · CLI REFERENCE</div>
+<h2>What the script really checks, and what it can only call unknown</h2>
+<p><code>devflow.py</code> uses the Python 3.9+ standard library on Windows, Linux, and macOS. It does not run the project build, does not use the network, and does not perform dangerous Git writes. Every stage gate is a <strong>local preflight opinion</strong>.</p>
+<div class="tbl"><table>
+<thead><tr><th>Command</th><th>Writes to the project?</th><th>What it can check</th><th>What it must not claim</th></tr></thead>
+<tbody>
+<tr><td><code>inspect</code></td><td>No</td><td>Directory clues, a type suggestion, and the Git baseline</td><td>That it fully understands the business</td></tr>
+<tr><td><code>init --dry-run</code></td><td>No</td><td>Files it would create or map</td><td>That initialization already happened</td></tr>
+<tr><td><code>init [--adopt]</code></td><td>Only missing governance files</td><td>Config plus templates that still need to be filled in</td><td>That requirements or design are approved</td></tr>
+<tr><td><code>audit</code></td><td>No</td><td>Document map, path safety, placeholders, the trace CSV, and Git change hints</td><td>That tests passed or that the code means the right thing</td></tr>
+<tr><td><code>gate --stage</code></td><td>No</td><td>Structural checks before design, merge, or release</td><td>That external CI or a person has approved it</td></tr>
+</tbody></table></div>
+<h3>How to read a typical result</h3>
+<div class="grid2">
+<div class="panel"><b>BLOCKED</b><p>A required file is missing, a path is unsafe, evidence is absent, or a critical placeholder remains. Do not advance that stage as if it were ready.</p><b>REVIEW_REQUIRED</b><p>There is a warning or an item a person must confirm. Do not treat the result as fully usable.</p></div>
+<div class="panel"><b>LOCALLY_CONSISTENT</b><p>The local structure check found nothing wrong. That does not mean the implementation, performance, or remote CI passed.</p><b>READY_FOR_HUMAN_REVIEW</b><p>It is ready to hand to someone with authority. It is not formal approval.</p></div>
+</div>
+<h3>Exit codes and CI</h3>
+<p><code>audit</code> returns <code>2</code> on a structural error. With no errors, warnings usually return <code>0</code>, and <code>1</code> when <code>--strict</code> is set. <code>gate</code> returns <code>2</code> when it blocks. A project may run <code>audit --strict</code> in CI according to its own risk. <strong>Do not let the script exit code replace real tests, pull-request approval, or release authorization.</strong></p>
+<div class="note">For a wrapper or a monorepo, point <code>--root</code> at the scope that is actually governed. Read <code>document_map</code> in <code>.devflow.json</code>. Do not force a parent SRS onto an unrelated submodule.</div>
+</section>
+<section class="section" id="gate">
+<div class="number">09 · INTERACTIVE GATE LAB</div>
+<h2>Why a fully ticked checklist is still not release approval</h2>
+<p>This is a <strong>learning simulator</strong>. Switch the stage, tick evidence, and watch the local preflight change. It does not read a real repository, and it does not change Git, CI, or release state.</p>
+<div class="control-card">
+<div class="control-row">
+<label>Stage<select id="gateStage">
+<option value="design">Design gate</option>
+<option value="merge">Merge gate</option>
+<option value="release">Release gate</option>
+</select></label>
+<button class="btn" id="gateReset">Clear the sample evidence</button>
+</div>
+<div id="gateChecks" style="margin-top:15px"></div>
+<div class="gate-banner" id="gateBanner" aria-live="polite"></div>
+<p class="tiny" style="margin:8px 0 0">Ticking every box only means the simulated local check is complete. Real CI, target-board tests, and approval by an authorized person still have to be verified separately.</p>
+</div>
+<h3>Four kinds of evidence</h3>
+<div class="tbl"><table>
+<thead><tr><th>Source</th><th>A credible statement</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>A real tool or CI</td><td>Names the object, environment, SHA, raw result, and source</td><td>A CI run URL tied to a commit</td></tr>
+<tr><td>A real person</td><td>Names the reviewer, the scope of their authority, the evidence, and the time</td><td>A formal review record from an authorized reviewer</td></tr>
+<tr><td>A self-reported status</td><td>May only be recorded as self-reported</td><td>Hand-editing JSON to say "passed"</td></tr>
+<tr><td>No evidence, or the tool is unavailable</td><td>UNKNOWN or BLOCKED</td><td>The lab board or remote CI cannot be reached</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="section" id="scenarios">
+<div class="number">10 · PRACTICE</div>
+<h2>Three realistic cases: land the work without empty documents</h2>
+<h3>Case 1: a PC ISP simulator</h3>
+<p><b>Requirement:</b> the user can adjust Gamma and preview the result. When Gamma is disabled, the request must not be rejected by the enabled-state parameter rules. <b>Design:</b> state when a parameter takes effect, the pipeline input and output formats, the meaning of a state change, and the error codes. Record an ADR only if the rule crosses modules in a way that later readers must remember. <b>Task:</b> change the contract, the implementation, and the boundary tests together. <b>Verification:</b> cover enabled and disabled, illegal values, state updates while switching, and any performance figure the project actually requires. <b>Release:</b> a green build and a finished review do not mean the new contract has been released.</p>
+<div class="panel"><b>The smallest trace for this case</b><p><code>REQ-ISP-001</code> &rarr; the <code>enabled</code> condition in the interface contract &rarr; <code>TASK-ISP-007</code> &rarr; the implementation PR &rarr; <code>TEST-ISP-001</code> (positive and negative) &rarr; a real CI or human acceptance record. The identifiers are examples only.</p></div>
+<h3>Case 2: dual-channel capture and processing on RK3588</h3>
+<p><b>Requirement:</b> hold the target frame rate on the confirmed sensor and board configuration, and do not let a slow consumer rewind frames. <b>Architecture:</b> the producer-consumer queue, ping-pong or ring buffers, DMA and cache ownership, timestamp alignment, and the drop policy. <b>Verification:</b> host tests for the data structure; on-target tests for multi-channel frame integrity, soak, start/stop, fault interruption, and temperature. <b>Release:</b> freeze the combination of BSP, kernel, DTB, user firmware, and board revision.</p>
+<h3>Case 3: a Qt H.265 player</h3>
+<p><b>Requirement:</b> name the supported H.265 bitstream or container and the OS or decoder environment. On failure, return an error the user can recover from. <b>Architecture:</b> the playback state machine, decode thread, video rendering, buffer ceiling, and resource release. <b>Verification:</b> bitstream samples, close and reopen, hardware decode unavailable, device changes, and installer upgrade. <b>Release:</b> the built installer version must match the version the application shows. Check the signature, dependencies, and recovery path.</p>
+<h3>A task contract you can reuse</h3>
+<div class="codebox"><div class="codecap">Task contract · all three profiles <button class="copy" data-copy>Copy</button></div>
+<pre>TASK_ID: TASK-&lt;SCOPE&gt;-NNN
+TYPE: feature / defect / refactor / hotfix / docs
+REQ: linked requirement IDs
+BASELINE: baseline branch and the real current SHA
+GOAL: the observable result and why it matters
+SCOPE: modules that must change, and what must not change
+DESIGN: architecture, ADR, and interface contract, each with its status
+ACCEPTANCE: normal and illegal inputs, and measurable criteria
+TEST: the real conditions for unit, integration, target, HIL, or E2E
+RISK: safety, compatibility, data, timing, upgrade, and rollback
+OUTPUT: source, the necessary documents, tests, and evidence
+STOP: cannot verify, interface conflict, or an unauthorized dangerous action</pre>
+</div>
+</section>
+
+<section class="section faq" id="faq">
+<div class="number">11 · TROUBLESHOOTING</div>
+<h2>Where workflow governance usually goes wrong</h2>
+<details open><summary>Does every one-line change need an ADR?</summary><p>No. An ADR records a significant architecture choice whose reason must still be clear later. An ordinary fix belongs in the issue or pull request. How much detailed design you write depends on complexity and risk.</p></details>
+<details><summary>I already have a lot of documents. Why not just paste them into the templates?</summary><p>One requirement or protocol cannot have two conflicting authorities. Run <code>--adopt --dry-run</code> first, keep the existing specification, and add any unrecognized path to <code>.devflow.json</code> by hand.</p></details>
+<details><summary>Detection says hybrid or ambiguous. What now?</summary><p>Choose the scope from the runtime, the deliverable, and the subproject. A repository that contains firmware, a backend, and a Qt GUI needs an explicit cross-system contract. Do not force one profile onto all of it.</p></details>
+<details><summary>The test machine or target board is unavailable. Can I still open a PR?</summary><p>Say exactly what did not run, and the risk. Whether it may merge is decided by the project gate and the person who owns that decision. A high-assurance or safety-related change may have to stop. Host unit tests are not HIL.</p></details>
+<details><summary>Why does the release preflight never print "automatically approved"?</summary><p>Release depends on whether remote CI is genuine, who owns the artifact, independent approval, the target environment, and actions that may be irreversible. An offline local script has neither the authority nor the information, so those items stay UNKNOWN.</p></details>
+<details><summary>Can we still use Git Flow, trunk-based development, or Scrum?</summary><p>Yes. The skill does not impose a branch model or an agile ceremony. It asks for small reviewable changes, a reliable merge gate, a version baseline, and traceable evidence. Pick the flow that matches how the team delivers.</p></details>
+<details><summary>Can this be used directly for a safety certification such as ISO 26262 or IEC 62304?</summary><p>No. This general skill is not a compliance certificate. A regulated project still needs the applicable standard, its own process system, tool qualification, and an authorized independent assessment. This package is only a general engineering starting point.</p></details>
+</section>
+
+<section class="section" id="glossary">
+<div class="number">12 · TERMINOLOGY</div>
+<h2>Glossary: abbreviations and the ideas behind them</h2>
+<p>Type a keyword to filter. The list explains terms used in the documents, the code, the reviews, and the three software profiles.</p>
+<input id="termSearch" placeholder="Search, for example ADR, cache, HIL, migration, contract" aria-label="Search terms">
+<div class="glossary-grid" id="termList"></div>
+<h3>References for orientation, not a substitute for a project's own obligations</h3>
+<div class="ref-links">
+<div>Agent Skills open format: <a href="https://agentskills.io/specification" target="_blank" rel="noreferrer">agentskills.io/specification</a></div>
+<div>OpenAI / Codex skills: <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noreferrer">learn.chatgpt.com/docs/build-skills</a></div>
+<div>Automotive SPICE: <a href="https://vda-qmc.de/automotive-spice/" target="_blank" rel="noreferrer">vda-qmc.de/automotive-spice</a></div>
+<div>NIST Secure Software Development Framework: <a href="https://csrc.nist.gov/Projects/ssdf" target="_blank" rel="noreferrer">csrc.nist.gov/Projects/ssdf</a></div>
+<div>OWASP ASVS: <a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noreferrer">owasp.org ASVS</a></div>
+</div>
+</section>
+<div class="footer">devflow_guide · Usage and engineering workflow · v1.0.0 · Single-file offline manual · 2026</div>
+</main>
+</div>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const names={embedded:'Embedded',web:'Web',app:'Application'};
+const assNames={lite:'lightweight',standard:'standard',high:'high-assurance'};
+const sets={
+embedded:{why:'Firmware is coupled to hardware. Failure shows up as timing, data correctness, or the ability to recover the device',docs:['Board and BSP compatibility matrix','Hardware interface and driver lifetime','DMA, cache, buffer, and interrupt contract','Real-time and memory budgets','On-target and HIL verification','Firmware version, flashing, and recovery'],tests:['Host unit tests','Target integration and start/stop','Load, soak, fault, and power-loss tests']},
+web:{why:'A network boundary and persistent data create authorization, migration, and runtime-availability risk',docs:['OpenAPI or API contract and version compatibility','Data schema, migration, and rollback','Authentication, authorization, and security design','Deploy, alert, backup, and restore'],tests:['API, contract, and integration tests','End-to-end tests and authorization negatives','Migration, load, and security tests']},
+app:{why:'The experience depends on OS and device differences, thread lifetime, and install or upgrade behavior',docs:['Screens, state machine, and async lifetime','OS and device compatibility matrix','Install, signature, upgrade, and data migration'],tests:['UI and integration tests','Install, upgrade, and uninstall','Crash, device compatibility, and resource-release tests']}
+};
+function updateProfile(){
+  const p=$('#profileSelect').value,a=$('#assuranceSelect').value,d=sets[p];
+  const cut=a==='lite'?'Create the six common governance documents only. Domain notes can live inside them.':a==='standard'?'Create the common documents plus the domain documents, and keep a PR and release plan.':'Create the common and domain documents plus a risk register and configuration baseline. Require independent review, controlled evidence, and formal approval.';
+  $('#profileOutput').innerHTML='<b>'+names[p]+' · '+assNames[a]+' governance</b><br>'+d.why+'.<br><strong>Focus documents: </strong>'+d.docs.join('; ')+'.<br><strong>Verification layers: </strong>'+d.tests.join('; ')+'.<br><strong>Tailoring: </strong>'+cut;
+}
+$('#profileSelect').addEventListener('change',updateProfile);
+$('#assuranceSelect').addEventListener('change',updateProfile);
+updateProfile();
+const stages=[
+['Requirements','State who needs what, the success criteria, the boundary, and the failure path.','REQ and acceptance criteria. A requirement that cannot be checked is not done.'],
+['Risk check','Try the most uncertain hardware throughput, migration, security, or performance question first.','PoC measurements, failure notes, and a risk disposition.'],
+['Architecture','Name the real module responsibilities, data flow, runtime, and cross-component decisions.','An architecture description, plus an ADR and its status when the decision is significant.'],
+['Interfaces','Define inputs and outputs, timing, errors, formats, compatibility, and resource ownership.','OpenAPI, protobuf, a protocol note, or a module contract.'],
+['Tasks','Split the work into the smallest behavior that can be verified on its own.','A TASK or issue, the code boundary, and the acceptance and test method.'],
+['Code and test','Update code, the necessary unit tests, and affected documents in the same PR.','Source, tests, and document diffs, with a real local result.'],
+['Review and CI','Build, check, review, and integrate for real.','A real check record that names the SHA, plus review feedback.'],
+['Acceptance','Run compatibility, performance, security, and fault checks in the target environment.','Target, HIL, or end-to-end logs, and an environment that can be reproduced.'],
+['Release','Freeze the version, artifact, and configuration. Assess risk and get authorization.','Candidate artifact hash, release approval, and a rollback and recovery plan.'],
+['Maintain','Turn logs and issues into the next requirement, and keep the batches small.','Issues, regression tests, and a short note on the fix.']
+];
+let idx=0,timer=null;
+function step(i){
+  idx=i;
+  $$('.step').forEach((el,j)=>{el.classList.toggle('on',j===i);el.setAttribute('aria-current',String(j===i));});
+  const s=stages[i];
+  $('#stageDetail').innerHTML='<div class="stage-index">STEP '+String(i+1).padStart(2,'0')+' / 10</div><h3>'+s[0]+'</h3><p>'+s[1]+'<br><b style="color:#91e1e1">Stage evidence: </b>'+s[2]+'</p>';
+  $('#flowBar').style.width=((i+1)*10)+'%';
+}
+const holder=$('#stepCards');
+stages.forEach((s,i)=>{const b=document.createElement('button');b.className='step';b.innerHTML='<span>'+String(i+1).padStart(2,'0')+'</span>'+s[0];b.addEventListener('click',()=>{stop();step(i);});holder.append(b);});
+function stop(){if(timer){clearInterval(timer);timer=null;}$('#playSteps').textContent='\u25B6 Auto-play';}
+$('#playSteps').addEventListener('click',()=>{if(timer){stop();return;}$('#playSteps').textContent='\u275A\u275A Pause';timer=setInterval(()=>step((idx+1)%stages.length),2000);});
+$('#resetSteps').addEventListener('click',()=>{stop();step(0);});
+step(0);
+const docText={
+embedded:'Eight common documents: INDEX, REQUIREMENTS, ARCHITECTURE, CONTRACTS, TEST_PLAN, TRACEABILITY, REVIEW_LOG, and RELEASE_PLAN. Embedded also adds BOARD_MATRIX, HARDWARE_CONTRACT, REALTIME_MEMORY, TARGET_VERIFICATION, and FIRMWARE_MANIFEST.',
+web:'The same eight common documents, plus API_DATA, SECURITY, and SERVICE_OPERATIONS for the interface, data security, and runtime recovery.',
+app:'The same eight common documents, plus UI_STATE, COMPATIBILITY, and PACKAGING for UI state, the OS matrix, and install or upgrade.',
+high:'Applies to all three profiles. On top of standard, add RISK_REGISTER and BASELINE. Strengthen approval, two-way traceability, real evidence, and deviation control.'
+};
+$$('[data-doc-profile]').forEach(btn=>btn.addEventListener('click',()=>{$$('[data-doc-profile]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');$('#docOutput').textContent=docText[btn.dataset.docProfile];}));
+$('#docOutput').textContent=docText.embedded;
+const gates={
+design:[['REQ is testable','Scope, inputs, faults, and acceptance are explicit'],['Key risks are assessed','There is a basis, or the residual risk is named'],['Architecture and interfaces are clear','ADR status and the boundary where it applies are clear'],['The test strategy can be executed','Environment, test design, and an owner exist']],
+merge:[['Code and documents changed together','Impact on interfaces, requirements, and architecture was reviewed'],['Local checks actually ran','A reproducible command, SHA, and real result exist'],['Remote CI passed for this commit','The target commit and checks were confirmed in the CI service'],['Independent review is done','A reviewer with the right authority confirmed it']],
+release:[['The deliverable is frozen','Build environment, SHA, and artifact hash are recorded accurately'],['Target acceptance is done','Target or HIL, or the real application E2E and compatibility tests'],['Upgrade and rollback were checked','There is a recovery method for configuration, database, or firmware'],['Release approval exists','It was checked in the real approval or release system']]
+};
+function renderGate(){
+  const items=gates[$('#gateStage').value], hold=$('#gateChecks');
+  hold.innerHTML='';
+  items.forEach((a)=>{
+    const label=document.createElement('label');
+    label.className='gate-check';
+    const c=document.createElement('input');
+    c.type='checkbox';
+    c.setAttribute('aria-label',a[0]);
+    c.addEventListener('change',evaluateGate);
+    const txt=document.createElement('span');
+    const b=document.createElement('b');
+    b.textContent=a[0];
+    const sm=document.createElement('small');
+    sm.textContent=a[1];
+    txt.append(b,sm);
+    label.append(c,txt);
+    hold.append(label);
+  });
+  evaluateGate();
+}
+function evaluateGate(){
+  const checks=$$('#gateChecks input'), done=checks.filter(x=>x.checked).length, all=done===checks.length;
+  const msg=$('#gateBanner');
+  msg.classList.toggle('ok',all);
+  msg.textContent=all?('Sample check '+done+'/'+checks.length+': local preflight only. External truth still has to be verified.'):('Sample check '+done+'/'+checks.length+': something is missing. The simulated result is BLOCKED / UNKNOWN.');
+}
+$('#gateStage').addEventListener('change',renderGate);
+$('#gateReset').addEventListener('click',renderGate);
+renderGate();
+const gloss=[
+['Agent Skill','A reusable agent workflow package made of SKILL.md plus optional scripts and references.'],
+['SKILL.md','The skill entry file. Front matter names it and says when to use it. The body states the required behavior.'],
+['Profile','The project type. This skill uses embedded, web, and app. A mixed repository is handled by subproject.'],
+['Assurance','How much documentation, testing, and approval to require, based on failure consequence and compliance or customer obligations.'],
+['SRS','Software Requirements Specification. The verifiable behavior and constraints.'],
+['PRD','Product Requirements Document. Business value, user scenarios, and the product boundary.'],
+['REQ','A stable requirement identifier used to link design, code, and tests.'],
+['ADR','Architecture Decision Record. A significant decision, the reason, the tradeoff, and a status such as Proposed or Accepted.'],
+['C4','A layered architecture description, usually from system context to containers, components, and code only when needed.'],
+['Docs as Code','Documents live in version control, change review, and automated checks, and move with the source.'],
+['Task / Issue','A trackable piece of work with a goal, scope, dependencies, acceptance, and an owner.'],
+['Git','Distributed version control for the history, branches, and commits of code and documents.'],
+['Commit / SHA','A commit and its object id. It pins the baseline and the revision a test actually ran against.'],
+['Branch','A line of development isolated from the main line until it is reviewed and merged.'],
+['PR / Pull Request','A proposal and review entry for a code change. It is not a release.'],
+['Code Review','A person or tool examining a change for correctness, safety, maintainability, and scope.'],
+['CI','Continuous Integration. Automated build, static checks, and tests.'],
+['CD','Continuous Delivery or Deployment. Being able to release is not the same as automatically deploying.'],
+['Unit Test','An automated assertion about a function, class, or small module.'],
+['Integration Test','A test that two or more modules collaborate and that their interface holds.'],
+['E2E','End to end. A test of a complete observable flow across modules.'],
+['HIL','Hardware-in-the-loop. Real equipment or a controller is part of the automated check.'],
+['PoC','Proof of concept. A small experiment aimed at the riskiest assumption.'],
+['Gate','The checks and approvals required before the next stage.'],
+['Traceability','The ability to go from a requirement to design, tests, and evidence, and back again.'],
+['Baseline','A named, controlled set of requirements, source, configuration, and build version.'],
+['Artifact','A build or delivery object, such as a firmware image, installer, or container image, plus its metadata.'],
+['SHA-256','A cryptographic hash. Here it identifies an artifact and checks that its contents are intact.'],
+['DoD','Definition of Done. When this task meets the conditions for delivery.'],
+['Rollback','Returning a deployment, configuration, or data set to a compatible working version or state.'],
+['BSP','Board Support Package. Chip and board startup plus the related drivers.'],
+['SoC','System on Chip. A processor and other controllers integrated in one chip.'],
+['DTS / DTB','Device-tree source and binary. They describe hardware structure, resources, and connections for the kernel and related software.'],
+['ISP','Image Signal Processor, or that processing chain: black level, demosaic, color, Gamma, and similar stages.'],
+['DSP','Digital Signal Processor, or the field of digital signal processing.'],
+['DMA','Direct Memory Access. A peripheral moves data without the CPU copying it byte by byte.'],
+['Cache Coherency','CPU and DMA, or other agents, see the correct version of the same memory.'],
+['IOMMU','I/O memory management unit. It translates and isolates device DMA addresses.'],
+['IRQ','Interrupt request. It enters a defined handling context.'],
+['Buffer','A data buffer. Its lifetime, read and write rights, format, alignment, and owner must be defined.'],
+['RTOS','Real-time operating system. Scheduling with a predictable timing bound.'],
+['API','Application Programming Interface. The call shape and the meaning of the data.'],
+['OpenAPI','A standard description of HTTP routes, parameters, responses, and data models.'],
+['Schema','A description of a data structure and its constraints, for an API, database, message, or configuration.'],
+['Migration','A controlled change of data format or database structure.'],
+['Authn / Authz','Authentication and authorization. Proving identity is not the same as checking permission.'],
+['SAST / SCA','Static application security testing, and software composition analysis. They find some risks in source and dependencies.'],
+['SBOM','Software Bill of Materials. Components and versions, used for supply-chain management.'],
+['Observability','Logs, metrics, and traces used to infer internal state and failure.'],
+['Idempotency','Repeating an operation has the same external effect as doing it once, as the business defines that effect.'],
+['V-Model','An engineering idea that pairs each design level with a verification activity. It can be combined with small iterations.'],
+['ASPICE','Automotive SPICE. A process-capability model and assessment framework for automotive system and software development.'],
+['ISO 26262','The road-vehicle functional-safety series. Whether it applies depends on the product and its safety lifecycle.'],
+['MISRA','A C and C++ coding-rule set aimed at safe and reliable code. Applicability is a project choice.'],
+['Version Baseline','The traceable relationship among source, dependencies, build configuration, and artifacts.']
+];
+const termList=$('#termList');
+gloss.forEach(([name,definition])=>{
+  const d=document.createElement('div');
+  d.className='term';
+  d.dataset.search=(name+' '+definition).toLowerCase();
+  const b=document.createElement('b');
+  b.textContent=name;
+  const p=document.createElement('p');
+  p.textContent=definition;
+  d.append(b,p);
+  termList.append(d);
+});
+$('#termSearch').addEventListener('input',e=>{
+  const v=e.target.value.trim().toLowerCase();
+  $$('.term').forEach(x=>x.classList.toggle('hide',!x.dataset.search.includes(v)));
+});
+$$('button[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  const str=b.closest('.codebox').querySelector('pre').innerText;
+  try{await navigator.clipboard.writeText(str);b.textContent='Copied';}
+  catch(e){
+    const t=document.createElement('textarea');
+    t.value=str;t.style.position='fixed';t.style.left='-9999px';
+    document.body.append(t);t.select();
+    const ok=document.execCommand('copy');
+    b.textContent=ok?'Copied':'Select the code manually';
+    t.remove();
+  }
+  setTimeout(()=>b.textContent='Copy',1900);
+}));
+$('#menuBtn').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
+$$('#nav a').forEach(a=>a.addEventListener('click',()=>$('#sidebar').classList.remove('open')));
+const anchors=$$('#nav a');
+function mark(){
+  const pos=window.scrollY+120;
+  let current=anchors[0];
+  for(const a of anchors){
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t && t.getBoundingClientRect().top+window.scrollY<=pos) current=a;
+  }
+  anchors.forEach(a=>a.classList.toggle('active',a===current));
+}
+window.addEventListener('scroll',mark,{passive:true});
+mark();
+})();
+</script>
+</body>
+</html>
